@@ -221,3 +221,4 @@ class Reversi(tk.Tk):
 if __name__ == "__main__":
     app = Reversi()
     app.mainloop()
+MASSIMO
