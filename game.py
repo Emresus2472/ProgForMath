@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 from PIL import Image, ImageTk
 
 class Reversi(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Reversi Spel")
-        self.configure(bg="green")
+        self.configure(bg="lightblue")
         self.geometry("685x559")
 
         self.size = 6
@@ -21,10 +22,10 @@ class Reversi(tk.Tk):
         self.update_possible_moves()  # Initialize possible moves
 
     def create_widgets(self):
-        self.new_game = tk.Button(self, text="Nieuw Spel", command=self.new_game_click)
+        self.new_game = ttk.Button(self, text="Nieuw Spel", command=self.new_game_click)
         self.new_game.place(x=46, y=26, width=109, height=23)
 
-        self.help = tk.Button(self, text="Help", command=self.help_click)
+        self.help = ttk.Button(self, text="Help", command=self.help_click)
         self.help.place(x=161, y=26, width=75, height=23)
 
         self.red_stone = ImageTk.PhotoImage(Image.open("resources/Red.png").resize((40, 42)))
@@ -36,34 +37,34 @@ class Reversi(tk.Tk):
         self.blue_indicator = tk.Label(self, image=self.blue_stone)
         self.blue_indicator.place(x=283, y=115)
 
-        self.red_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="green")
+        self.red_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="lightblue")
         self.red_score.place(x=329, y=78)
 
-        self.blue_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="green")
+        self.blue_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="lightblue")
         self.blue_score.place(x=329, y=126)
 
-        self.red_turn = tk.Label(self, text="Rood aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="green")
+        self.red_turn = tk.Label(self, text="Rood aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="lightblue")
         self.red_turn.place(x=160, y=78)
 
-        self.blue_turn = tk.Label(self, text="Blauw aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="green")
+        self.blue_turn = tk.Label(self, text="Blauw aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="lightblue")
         self.blue_turn.place(x=160, y=126)
 
-        self.possible_moves_label = tk.Label(self, text="", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="green")
+        self.possible_moves_label = tk.Label(self, text="", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="lightblue")
         self.possible_moves_label.place(x=447, y=56)
 
-        self.possible_moves_title = tk.Label(self, text="Mogelijke zetten", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="green")
+        self.possible_moves_title = tk.Label(self, text="Mogelijke zetten", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="lightblue")
         self.possible_moves_title.place(x=433, y=36)
 
-        self.button_4x4 = tk.Button(self, text="4x4", command=lambda: self.bord_size_click(4))
+        self.button_4x4 = ttk.Button(self, text="4x4", command=lambda: self.bord_size_click(4))
         self.button_4x4.place(x=46, y=57, width=75, height=23)
 
-        self.button_6x6 = tk.Button(self, text="6x6", command=lambda: self.bord_size_click(6))
+        self.button_6x6 = ttk.Button(self, text="6x6", command=lambda: self.bord_size_click(6))
         self.button_6x6.place(x=46, y=86, width=75, height=23)
 
-        self.button_8x8 = tk.Button(self, text="8x8", command=lambda: self.bord_size_click(8))
+        self.button_8x8 = ttk.Button(self, text="8x8", command=lambda: self.bord_size_click(8))
         self.button_8x8.place(x=46, y=113, width=75, height=23)
 
-        self.button_12x12 = tk.Button(self, text="12x12", command=lambda: self.bord_size_click(12))
+        self.button_12x12 = ttk.Button(self, text="12x12", command=lambda: self.bord_size_click(12))
         self.button_12x12.place(x=46, y=142, width=75, height=23)
 
     def create_board_buttons(self):
@@ -170,6 +171,9 @@ class Reversi(tk.Tk):
         self.mogelijk_zetten(self.turn)
         if self.show_help:
             self.highlight_possible_moves()
+            self.update_possible_moves_label()
+        else:
+            self.possible_moves_label.configure(text="")
 
     def check_for_any_moves(self):
         previous_turn = self.turn
