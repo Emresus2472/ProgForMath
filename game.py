@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 from PIL import Image, ImageTk
+import random
 
 class Reversi(tk.Tk):
     def __init__(self):
@@ -13,15 +14,25 @@ class Reversi(tk.Tk):
         self.size = 6
         self.turn = "Blue"
         self.board = []
-        self.board_colors = []  # Track colors separately
+        self.board_colors = []  
         self.possible_moves = []
-        self.show_help = False  # Help toggle
+        self.show_help = False  
+        self.play_vs_bot = False  
+        self.bot_is_playing = False
 
         self.create_widgets()
         self.create_board_buttons()
-        self.update_possible_moves()  # Initialize possible moves
+        self.update_possible_moves()  
+
+    def toggle_bot_mode(self):
+        self.play_vs_bot = not self.play_vs_bot
+        status = "Ingeschakeld" if self.play_vs_bot else "Uitgeschakeld"
+        messagebox.showinfo("Bot Modus", f"Speel tegen de Bot: {status}")
 
     def create_widgets(self):
+        self.bot_button = ttk.Button(self, text="Speel tegen Bot", command=self.toggle_bot_mode)
+        self.bot_button.place(x=250, y=26, width=150, height=23)
+
         self.new_game = ttk.Button(self, text="Nieuw Spel", command=self.new_game_click)
         self.new_game.place(x=46, y=26, width=109, height=23)
 
@@ -153,15 +164,18 @@ class Reversi(tk.Tk):
                     self.board[row][col].config(bg="white")
 
     def button_is_clicked(self, row, col):
-        if (row, col) in self.possible_moves:  # Directly check 0-based indices
+        if (row, col) in self.possible_moves:  
             self.set_stone(row, col, self.turn)
             self.flipping(row, col)
             self.turn = "Blue" if self.turn == "Red" else "Red"
             self.red_turn.config(text="Rood aan zet" if self.turn == "Red" else "")
             self.blue_turn.config(text="Blauw aan zet" if self.turn == "Blue" else "")
             self.verwijder_mogelijke_zetten()
-            self.update_possible_moves()  # Update moves for the next turn
+            self.update_possible_moves()  
             self.tellen()
+
+            if self.play_vs_bot and self.turn == "Blue" and self.possible_moves:
+                self.after(500, self.bot_move)  
 
             if not self.possible_moves:
                 if not self.check_for_any_moves():
@@ -174,6 +188,11 @@ class Reversi(tk.Tk):
             self.update_possible_moves_label()
         else:
             self.possible_moves_label.configure(text="")
+
+        if self.play_vs_bot == True and self.turn == "Blue" and self.possible_moves:
+            self.after(500, self.bot_move)  
+
+        
 
     def check_for_any_moves(self):
         previous_turn = self.turn
@@ -221,6 +240,29 @@ class Reversi(tk.Tk):
         self.tellen()
         if size == 12:
             self.geometry("685x709")
+
+    def bot_move(self):
+        if self.bot_is_playing or not self.possible_moves or self.turn != "Blue": 
+            return
+
+        self.bot_is_playing = True  
+        row, col = random.choice(self.possible_moves)
+        self.set_stone(row, col, self.turn)
+        self.flipping(row, col)
+        self.verwijder_mogelijke_zetten()
+
+        self.turn = "Red"
+        self.red_turn.config(text="Rood aan zet")
+        self.blue_turn.config(text="")
+        self.update_possible_moves()
+        self.tellen()
+
+        if not self.possible_moves and not self.check_for_any_moves():
+            self.end_game()
+
+        self.bot_is_playing = False
+
+
 
 if __name__ == "__main__":
     app = Reversi()
