@@ -30,14 +30,14 @@ class Reversi(tk.Tk):
         messagebox.showinfo("Bot Modus", f"Playing against Bot: {status}")
 
     def create_widgets(self):
-        self.bot_button = ttk.Button(self, text="Speel tegen Bot", command=self.toggle_bot_mode)
-        self.bot_button.place(x=250, y=26, width=150, height=23)
+        self.bot_button = ttk.Button(self, text="Play against Bot", command=self.toggle_bot_mode)
+        self.bot_button.place(x=250, y=26, width=150, height=25)
 
-        self.new_game = ttk.Button(self, text="Nieuw Spel", command=self.new_game_click)
-        self.new_game.place(x=46, y=26, width=109, height=23)
+        self.new_game = ttk.Button(self, text="New game", command=self.new_game_click)
+        self.new_game.place(x=46, y=26, width=109, height=25)
 
         self.help = ttk.Button(self, text="Help", command=self.help_click)
-        self.help.place(x=161, y=26, width=75, height=23)
+        self.help.place(x=161, y=26, width=75, height=25)
 
         self.red_stone = ImageTk.PhotoImage(Image.open("resources/Red.png").resize((40, 42)))
         self.blue_stone = ImageTk.PhotoImage(Image.open("resources/Blue.png").resize((40, 42)))
@@ -54,16 +54,16 @@ class Reversi(tk.Tk):
         self.blue_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="gray")
         self.blue_score.place(x=329, y=126)
 
-        self.red_turn = tk.Label(self, text="Rood aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="gray")
+        self.red_turn = tk.Label(self, text="Red turn", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="gray")
         self.red_turn.place(x=160, y=78)
 
-        self.blue_turn = tk.Label(self, text="Blauw aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="gray")
+        self.blue_turn = tk.Label(self, text="Blue turn", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="gray")
         self.blue_turn.place(x=160, y=126)
 
         self.possible_moves_label = tk.Label(self, text="", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="gray")
         self.possible_moves_label.place(x=447, y=56)
 
-        self.possible_moves_title = tk.Label(self, text="Mogelijke zetten", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="gray")
+        self.possible_moves_title = tk.Label(self, text="Possible moves", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="gray")
         self.possible_moves_title.place(x=433, y=36)
 
         self.button_4x4 = ttk.Button(self, text="4x4", command=lambda: self.bord_size_click(4))
