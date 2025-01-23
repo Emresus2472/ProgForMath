@@ -8,7 +8,7 @@ class Reversi(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Reversi Spel")
-        self.configure(bg="lightblue")
+        self.configure(bg="gray")
         self.geometry("685x559")
 
         self.size = 6
@@ -26,8 +26,8 @@ class Reversi(tk.Tk):
 
     def toggle_bot_mode(self):
         self.play_vs_bot = not self.play_vs_bot
-        status = "Ingeschakeld" if self.play_vs_bot else "Uitgeschakeld"
-        messagebox.showinfo("Bot Modus", f"Speel tegen de Bot: {status}")
+        status = "On" if self.play_vs_bot else "Off"
+        messagebox.showinfo("Bot Modus", f"Playing against Bot: {status}")
 
     def create_widgets(self):
         self.bot_button = ttk.Button(self, text="Speel tegen Bot", command=self.toggle_bot_mode)
@@ -48,22 +48,22 @@ class Reversi(tk.Tk):
         self.blue_indicator = tk.Label(self, image=self.blue_stone)
         self.blue_indicator.place(x=283, y=115)
 
-        self.red_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="lightblue")
+        self.red_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="gray")
         self.red_score.place(x=329, y=78)
 
-        self.blue_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="lightblue")
+        self.blue_score = tk.Label(self, text="2", font=("Microsoft Sans Serif", 20), fg="white", bg="gray")
         self.blue_score.place(x=329, y=126)
 
-        self.red_turn = tk.Label(self, text="Rood aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="lightblue")
+        self.red_turn = tk.Label(self, text="Rood aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="gray")
         self.red_turn.place(x=160, y=78)
 
-        self.blue_turn = tk.Label(self, text="Blauw aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="lightblue")
+        self.blue_turn = tk.Label(self, text="Blauw aan zet", font=("Microsoft Sans Serif", 12, "bold"), fg="white", bg="gray")
         self.blue_turn.place(x=160, y=126)
 
-        self.possible_moves_label = tk.Label(self, text="", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="lightblue")
+        self.possible_moves_label = tk.Label(self, text="", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="gray")
         self.possible_moves_label.place(x=447, y=56)
 
-        self.possible_moves_title = tk.Label(self, text="Mogelijke zetten", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="lightblue")
+        self.possible_moves_title = tk.Label(self, text="Mogelijke zetten", font=("Microsoft Sans Serif", 8, "bold"), fg="white", bg="gray")
         self.possible_moves_title.place(x=433, y=36)
 
         self.button_4x4 = ttk.Button(self, text="4x4", command=lambda: self.bord_size_click(4))
@@ -77,6 +77,9 @@ class Reversi(tk.Tk):
 
         self.button_12x12 = ttk.Button(self, text="12x12", command=lambda: self.bord_size_click(12))
         self.button_12x12.place(x=46, y=142, width=75, height=23)
+
+        self.button_20x20 = ttk.Button(self, text="20x20", command=lambda: self.bord_size_click(20))
+        self.button_20x20.place(x=46, y=171, width=75, height=23)
 
     def create_board_buttons(self):
         x, y = 130, 200
@@ -236,7 +239,7 @@ class Reversi(tk.Tk):
                 widget.destroy()
         self.create_board_buttons()
         self.update_possible_moves()
-        self.blue_turn.config(text="Blauw aan zet")
+        self.blue_turn.config(text="Blauw on turn")
         self.tellen()
         if size == 12:
             self.geometry("685x709")
@@ -252,7 +255,7 @@ class Reversi(tk.Tk):
         self.verwijder_mogelijke_zetten()
 
         self.turn = "Red"
-        self.red_turn.config(text="Rood aan zet")
+        self.red_turn.config(text="Rood on turn")
         self.blue_turn.config(text="")
         self.update_possible_moves()
         self.tellen()
