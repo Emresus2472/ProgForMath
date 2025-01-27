@@ -171,8 +171,8 @@ class Reversi(tk.Tk):
             self.set_stone(row, col, self.turn)
             self.flipping(row, col)
             self.turn = "Blue" if self.turn == "Red" else "Red"
-            self.red_turn.config(text="Rood aan zet" if self.turn == "Red" else "")
-            self.blue_turn.config(text="Blauw aan zet" if self.turn == "Blue" else "")
+            self.red_turn.config(text="Red turn" if self.turn == "Red" else "")
+            self.blue_turn.config(text="Blue turns" if self.turn == "Blue" else "")
             self.verwijder_mogelijke_zetten()
             self.update_possible_moves()  
             self.tellen()
